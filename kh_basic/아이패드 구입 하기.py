@@ -14,7 +14,7 @@ def choice_pad():
         print("[1]구입하기 [2]종료하기")
         sel = input("메뉴를 선택하세요 : ")
         if sel == "1" or sel == "2":
-            return sel # return sel이 의미하는 바는 무엇인가?
+            return sel # return sel이 의미하는 바는 무엇인가? # sel은 input에 의해 받아지기 때문에 -> 문자열?
 
 def select_screen():
     while True:
@@ -53,4 +53,35 @@ def select_name_service():
 
 def make_ipad(screen, color, memory, network, name):
     global make_cnt
-    make_cnt += 1
+    make_cnt += 1 # 어떤 조건일 때 1씩 증가하는 것인가? # 구입 대수만큼 증가
+    print_screen = ("", "11인치", "12.9인치") # 튜플 -> 인덱스 접근 가능
+    print_color = "", "스페이스그레이", "실버"
+    print_memory = "", "128", "256", "512", "1024"
+    print_network = ("", "Wi-Fi", "Wi-Fi+Cellular")
+    serial_screen = (screen == "1") and "11" or "13"
+    serial_network = (network == "1") and "W" or "C"
+    serial_date = str(datetime.today().year)+str(datetime.today().month)+str(datetime.today().day)
+    serial_number = "iPad"+serial_screen+serial_network+serial_date+str(make_cnt)
+    print("iPad Pro가 출고 되었습니다.")
+    print("="*34)
+    print(f"화면 크기 : {print_screen[int(screen)]}") # print_screen 튜플에서 인덱스 표기 방식으로 표현
+    print(f"제품 색상 : {print_color[int(color)]}")
+    print(f"제품 용량 : {print_memory[int(memory)]}GB")
+    print(f"네트워크 : {print_network[int(network)]}")
+    print(f"이름 : {name}")
+    print(f"시리얼넘버 : {serial_number}")
+    print("-"*34)
+
+while True: # 앞쪽에 함수 전부 설정하고 전체 돌리는 과정 # 메인 코드
+    is_continue = choice_pad() # choice_pad 함수 run
+    if is_continue == "2":
+        print("iPad Pro 구입을 종료 합니다.") # choice_pad 함수 종료하기 시 -> 종료
+        break
+    screen = select_screen() # make_ipad 함수의 screen 설정 / 함수 run # 함수 run 순서에 따라 순차적으로 진행
+    color = select_color() # make_ipad 함수의 color 설정 / 함수 run
+    memory = select_memory() # make_ipad 함수의 memory 설정 / 함수 run
+    network = select_network() # make_ipad 함수의 network 설정 / 함수 run
+    name = select_name_service() # make_ipad 함수의 name 설정 / 함수 run
+    make_ipad(screen, color, memory, network, name) # make_ipad 함수 run 
+    # 앞서 돌린 값들 전부 make_ipad 함수에 적용 
+    
