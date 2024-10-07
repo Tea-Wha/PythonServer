@@ -1,0 +1,14 @@
+{
+    "id": 123456,
+    "name": "홍태화",
+    "history": [
+        {
+            "date": "2024-10-07",
+            "product": "iPhone 16 Pro"
+        },
+        {
+            "date": "2024-10-14",
+            "product": "Galaxy S24 Ultra"
+        }
+    ]
+}
