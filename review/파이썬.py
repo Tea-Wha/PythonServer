@@ -66,6 +66,13 @@ print(f"|{num4:.2f}|") # :.xf 방식을 이용하여 소수점 부분 자르기 
 # input 함수를 통하여 입력 받은 데이터는 -> 무조건 문자열
 # 원하는 데이터형으로 사용하려면 변환 필요 (input을 받을 때도 가능 / 추후 변경도 가능)
 name = input("이름을 입력하세요 : ")
-print(name)
+age = input("나이 입력 : ")
+addr = input("주소 입력 : ")
+jobs = input("직업 입력 : ")
+aver = input("성적 입력 : ")
+print(f"안녕하세요? {name} 님.")
+print(f"당신의 주소는 {addr}이고 직업은 {jobs}이고 나이는 {age}입니다.") # 문자열 입력
+print("당신의 주소는 "+addr+"이고 직업은 "+jobs+"이고 나이는 "+age+"입니다.") # 문자열 + 문자열 (문제 없음)
+
 
 
