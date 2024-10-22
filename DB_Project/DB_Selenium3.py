@@ -37,25 +37,22 @@ driver.get("https://comic.naver.com/webtoon/list?titleId=817859&tab=mon")
 time.sleep(5)
 driver.get("https://comic.naver.com/webtoon?tab=mon") # 실제 크롤링할 페이지 URL로 변경
 
+# 특정 영역에 있는 모든 li 태그를 찾기 (XPath는 해당 웹페이지에 맞게 수정)
+all_items = WebDriverWait(driver, 10).until(
+    EC.presence_of_all_elements_located((By.XPATH, "/html/body/div[1]/div/div[2]/div[3]/div[1]/div[1]/ul/li"))
+)
+
 # 크롤링할 데이터 저장 리스트
 webtoon_titles = []
 
-# Full XPath의 첫 번째와 마지막 범위
-for i in range(1, 102):  # li[1]부터 li[101]까지
+# 모든 li 항목을 반복하여 크롤링
+for item in all_items:
     try:
-        # 각 항목의 Full XPath 생성
-        full_xpath = f'/html/body/div[1]/div/div[2]/div[3]/div[1]/div[1]/ul/li[{i}]/div/a/span/span'
-
-        # XPath로 요소 찾기
-        title_element = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, full_xpath))
-        )
-
-        # 찾은 요소의 텍스트를 리스트에 저장
-        webtoon_titles.append(title_element.text)
-
+        # li 태그 안의 span 요소 찾기 (구조에 맞게 XPath 수정 가능)
+        title_element = item.find_element(By.XPATH, "./div/a/span/span")
+        webtoon_titles.append(title_element.text)  # 텍스트 저장
     except Exception as e:
-        print(f"XPath {i} 에러: {e}")
+        print(f"에러 발생: {e}")
 
 # 결과 출력
 for idx, title in enumerate(webtoon_titles, start=1):
