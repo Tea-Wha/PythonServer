@@ -15,11 +15,18 @@ driver = webdriver.Chrome(service=service)
 driver.get("https://nid.naver.com/nidlogin.login?mode=form&url=https://www.naver.com/")
 time.sleep(5)
 
+# id_box = driver.find_element(By.ID, "id")
+# id_box.send_keys("htw7880")
+# time.sleep(5)
+#
+# pw_box = driver.find_element(By.ID, "pw")
+# pw_box.send_keys("^ghdxoghk18")
+# time.sleep(5)
 
 # JavaScript로 직접 입력 필드에 값을 설정하는 방법
 driver.execute_script("document.getElementById('id').value='htw7880';")
 time.sleep(2)
-driver.execute_script("document.getElementById('pw').value='';")
+driver.execute_script("document.getElementById('pw').value='^ghdxoghk18';")
 time.sleep(2)
 
 login_button = driver.find_element(By.ID, "log.login")
@@ -30,7 +37,7 @@ driver.get("https://comic.naver.com/webtoon?tab=mon") # 실제 크롤링할 페�
 time.sleep(2)
 
 # 특정 영역에 있는 모든 li 태그를 찾기 (XPath는 해당 웹페이지에 맞게 수정)
-item_elements = WebDriverWait(driver, 20).until(
+author_elements = WebDriverWait(driver, 20).until(
     EC.presence_of_all_elements_located((By.XPATH, "/html/body/div[1]/div/div[2]/div[3]/div[1]/div[1]/ul/li" ))
 )
 
@@ -38,12 +45,13 @@ item_elements = WebDriverWait(driver, 20).until(
 webtoon_authors = []
 
 # 모든 li 항목을 반복하여 크롤링
-for item in item_elements:
+for author in author_elements:
     try:
         # li 태그 안의 span 요소 찾기 (구조에 맞게 XPath 수정 가능)
-        url_element = item.find_element(By.XPATH, "./a").text # 텍스트 저장
-        url_link = item.get_attribute("href")
-        webtoon_authors.append(url_link)
+        author_element = author.find_element(By.XPATH, "./div/div/a | ./div/a[2]").text
+        first_author_element = re.split(r' / |,', author_element)
+        first_author = first_author_element[0]
+        webtoon_authors.append(first_author)  # 텍스트 저장
     except Exception as e:
         print(f"에러 발생: {e}")
 

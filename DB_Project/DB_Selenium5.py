@@ -26,12 +26,20 @@ login_button.click()
 driver.get("https://comic.naver.com/webtoon?tab=mon") # 실제 크롤링할 페이지 URL로 변경
 
 # 특정 영역에 있는 모든 li 태그를 찾기 (XPath는 해당 웹페이지에 맞게 수정)
-all_webtoons = WebDriverWait(driver, 30).until(
+webtoon_titles = WebDriverWait(driver, 20).until(
     EC.presence_of_all_elements_located((By.XPATH, "/html/body/div[1]/div/div[2]/div[3]/div[1]/div[1]/ul/li"))
 )
+webtoon_authors = WebDriverWait(driver, 20).until(
+    EC.presence_of_all_elements_located((By.CLASS_NAME, "ContentAuthor__author--CTAAP"))
+)
+
 
 # 크롤링할 데이터 저장 리스트
 webtoon_data = []
+
+webtoon_authors_data = []
+
+webtoon_ratings_data = []
 
 # 모든 li 항목을 반복하여 크롤링
 for webtoon in all_webtoons:
