@@ -56,7 +56,7 @@ for url in urls:
     last_height = driver.execute_script("return document.body.scrollHeight")
     while True:
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(2)  # 페이지 로드 대기 시간 (조정 가능)
+        time.sleep(1)  # 페이지 로드 대기 시간 (조정 가능)
 
         new_height = driver.execute_script("return document.body.scrollHeight")
         if new_height == last_height:  # 스크롤 끝까지 도달 시 종료
@@ -82,9 +82,7 @@ for url in urls:
             first_author = first_author_element[0]
             rating_element = item.find_element(By.XPATH, "./div/div/span/span").text
             url_element = item.find_element(By.XPATH, "./a").get_attribute("href")
-            time.sleep(2)
             thumb_element = item.find_element(By.XPATH, "./a/div/img").get_attribute("src")
-            time.sleep(2)
             webtoon_titles.append([title_element, first_author, rating_element, url_element, thumb_element])
 
         except Exception as e:
